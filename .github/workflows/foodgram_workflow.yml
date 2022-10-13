@@ -79,8 +79,8 @@ jobs:
           echo DB_PORT=${{ secrets.DB_PORT }} >> .env
           sudo docker-compose up -d
           sudo docker-compose exec -T backend python manage.py migrate
-          sudo docker exec backend -T python manage.py shell -c 'from django.contrib.contenttypes.models import ContentType; ContentType.objects.all().delete(); exit();'
-          sudo docker exec backend -T python manage.py loaddata foodgram/dump.json
+          sudo docker exec backend python manage.py shell -c 'from django.contrib.contenttypes.models import ContentType; ContentType.objects.all().delete(); exit();'
+          sudo docker exec backend python manage.py loaddata foodgram/dump.json
           sudo docker-compose exec -T backend python manage.py collectstatic --no-input
   send_message:
     runs-on: ubuntu-latest
