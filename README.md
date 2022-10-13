@@ -81,7 +81,7 @@ exit
 ```
 - Копируем файл с базами данных из папки /infra в папку /app (при наличии файла БД *.json):
 ```
-docker cp fixtures.json <id контенера backend>:/app
+docker cp dump.json <id контенера backend>:/app
 ```
 - Команда для заполнения БД:
 ```
