@@ -2,13 +2,13 @@ version: '3.8'
 services:
   db:
     image: postgres:13.0-alpine
-    environment:
-      DB_ENGINE: django.db.backends.postgresql
-      DB_NAME: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: cfqqwwql
-      DB_HOST: db
-      DB_PORT: 5432
+    # environment:
+    #   ENGINE: django.db.backends.postgresql
+    #   NAME: postgres
+    #   USER: postgres
+    #   PASSWORD: cfqqwwql
+    #   HOST: db
+    #   PORT: 5432
     volumes:
       - /var/lib/postgresql/data/
     env_file:
