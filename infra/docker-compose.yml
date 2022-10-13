@@ -2,10 +2,24 @@ version: '3.8'
 services:
   db:
     image: postgres:13.0-alpine
+    # environment:
+    #   ENGINE: django.db.backends.postgresql
+    #   NAME: postgres
+    #   USER: postgres
+    #   PASSWORD: cfqqwwql
+    #   HOST: db
+    #   PORT: 5432
     volumes:
       - /var/lib/postgresql/data/
     env_file:
       - ./.env
+
+  frontend:
+    image: apisland/frontend:latest
+    volumes:
+      - ../frontend/:/app/result_build/
+    depends_on:
+      - backend
 
   backend:
     image: apisland/foodgram:latest
@@ -18,17 +32,11 @@ services:
       - ./.env
     restart: always
 
-  frontend:
-    image: apisland/frontend:latest
-    volumes:
-      - ../frontend/:/app/result_build/
-    depends_on:
-      - backend
-
   nginx:
     image: nginx:1.19.3
     ports:
       - "80:80"
+    restart: always
     volumes:
       - ../static/:/var/html/static/
       - ../media/:/var/html/media/recipes/
@@ -36,9 +44,7 @@ services:
       - ../frontend/build:/usr/share/nginx/html/
       - ../docs/:/usr/share/nginx/html/api/docs/
     depends_on:
-      - backend
       - frontend
-    restart: always
 
 volumes:
   postgres_data:

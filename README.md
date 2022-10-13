@@ -41,7 +41,7 @@ docker-compose up -d --build
 ```
 - Выполнить миграции:
 ```
-docker-compose exec web python manage.py migrate
+docker-compose exec backend python manage.py migrate
 ```
 - Загрузить CSV файлы в базу данных из __foodgram-project-react\backend\foodgram\data__ используя скрипт (при наличии файлов *.csv):
 ```
