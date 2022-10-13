@@ -9,12 +9,12 @@ services:
       - ./.env
 
   frontend:
-    image: apisland/frontend:latest
+    image: apisland/frontend:v2.10.2022
     volumes:
       - frontend_value:/app/result_build/build/
 
   backend:
-    image: apisland/foodgram:latest
+    image: apisland/foodgram:v2.10.2022
     restart: always
     volumes:
       - static_backend_value:/app/static/
