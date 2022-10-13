@@ -7,6 +7,13 @@ services:
     env_file:
       - ./.env
 
+  frontend:
+    image: apisland/frontend:v1.10.2022
+    volumes:
+      - ../frontend/:/app/result_build/
+    depends_on:
+      - backend
+
   backend:
     image: apisland/foodgram:latest
     volumes:
@@ -17,13 +24,6 @@ services:
     env_file:
       - ./.env
     restart: always
-
-  frontend:
-    image: apisland/frontend:v1.10.2022
-    volumes:
-      - ../frontend/:/app/result_build/
-    depends_on:
-      - backend
 
   nginx:
     image: nginx:1.19.3
