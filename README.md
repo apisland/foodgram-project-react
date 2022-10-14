@@ -41,24 +41,24 @@ docker-compose up -d --build
 ```
 - Выполнить миграции:
 ```
-docker-compose exec backend python manage.py migrate
+sudo docker-compose exec backend python manage.py migrate
 ```
 - Загрузить CSV файлы в базу данных из __foodgram-project-react\backend\foodgram\data__ используя скрипт (при наличии файлов *.csv):
 ```
-docker-compose exec backend python manage.py load_ingredients
+sudo docker-compose exec backend python manage.py load_ingredients
 ```
 и
 ```
-docker-compose exec backend python manage.py load_tags
+sudo docker-compose exec backend python manage.py load_tags
 ```
 
 - Создать суперпользователя:
 ```
-docker-compose exec backend python manage.py createsuperuser
+sudo docker-compose exec backend python manage.py createsuperuser
 ```
 - Собрать статику:
 ```
-docker-compose exec backend python manage.py collectstatic --no-input
+sudo docker-compose exec backend python manage.py collectstatic --no-input
 ```
 Если проект разворачивается на Ubuntu и статика не подгрузилась,
 необходимо сделать следующее:
@@ -68,7 +68,7 @@ docker ps
 ```
 Найти <container_id> для контейнера nginx, затем выполнить последовательно команды:
 ```
-docker exec -it <CONTAINER ID> /bin/sh
+sudo docker exec -it <CONTAINER ID> /bin/sh
 ls
 cd /var/html/
 ls -la /var/html/
@@ -85,11 +85,11 @@ docker cp dump.json <id контенера backend>:/app
 ```
 - Команда для заполнения БД:
 ```
-docker-compose exec backend python manage.py loaddata dump.json
+sudo docker-compose exec backend python manage.py loaddata dump.json
 ```
 - Остановить проект в контейнере:
 ```
-docker-compose down -v
+sudo docker-compose down -v
 ```
 - Шаблон для наполнения файла .env:
 ```
@@ -102,6 +102,11 @@ DB_PORT=5432 # порт для подключения к БД
 DEBUG=False
 SECRET_KEY=<...>
 ALLOWED_HOSTS=<...>
+```
+- учетные данные для проверки:
+```
+e-mail: admin@admin.ru
+password: cfqqwwql
 ```
 ## Проект выполнен:
 [Valentin Klimov](https://github.com/apisland)
