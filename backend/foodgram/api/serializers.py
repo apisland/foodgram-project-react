@@ -94,17 +94,6 @@ class UserEditSerializer(serializers.ModelSerializer):
         read_only_fields = ('role',)
 
 
-class ShowRecipeSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Recipe
-        fields = ('id', 'name', 'image', 'cooking_time')
-
-    def get_image(self, obj):
-        return f'{obj.image.url}'
-
-
 class RecipeSerializer(serializers.ModelSerializer):
     """ Сериализатор просмотра модели Рецепт. """
     tags = TagSerializer(many=True)
@@ -245,6 +234,19 @@ class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
         return RecipeSerializer(instance, context={
             'request': self.context.get('request')
         }).data
+
+
+class ShowRecipeSerializer(CreateUpdateRecipeSerializer):
+    image = serializers.SerializerMethodField(
+        method_name='get_image'
+    )
+
+    class Meta:
+        model = Recipe
+        fields = ('id', 'name', 'image', 'cooking_time')
+
+    def get_image(self, obj):
+        return f'{obj.image.url}'
 
 
 class UserFavoriteSerializer(serializers.ModelSerializer):
