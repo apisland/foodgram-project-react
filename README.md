@@ -1,6 +1,8 @@
 ![foodgram_workflow](https://github.com/apisland/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)
 
-- Link: http://84.201.159.88/redoc/
+- Link: http://84.201.159.88/api/docs/redoc.html
+
+- Link: http://84.201.159.88/
 
 # Проект: Foodgram (Продуктовый помощник)
 Дипломный проект Яндекс.Практикум

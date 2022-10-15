@@ -142,8 +142,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return RecipeSerializer
         return CreateUpdateRecipeSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({'request': self.request})
+        return context
 
 
 class ShoppingCartView(APIView):

@@ -144,6 +144,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
 class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
     """Сериалайзер создания/обновления рецепта."""
+    author = UserListSerializer(read_only=True)
     ingredients = IngredientsEditSerializer(many=True)
     tags = serializers.PrimaryKeyRelatedField(
         queryset=Tag.objects.all(), many=True
@@ -162,7 +163,6 @@ class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
             'text',
             'cooking_time',
         )
-        read_only_fields = ('author', )
 
     def validate(self, data):
         ingredients = data['ingredients']
@@ -210,7 +210,8 @@ class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         ingredients = validated_data.pop('ingredients')
         tags = validated_data.pop('tags')
-        recipe = Recipe.objects.create(**validated_data)
+        author = self.context.get('request').user
+        recipe = Recipe.objects.create(author=author, **validated_data)
         self.create_ingredients(ingredients, recipe)
         self.create_tags(tags, recipe)
         return recipe
