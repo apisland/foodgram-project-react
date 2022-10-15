@@ -17,8 +17,8 @@ services:
   backend:
     image: apisland/foodgram:latest
     volumes:
-      - ../static_value/:/app/static/
-      - ../media_value/:/app/media/recipes/
+      - ../static/:/app/static/
+      - ../media/:/app/media/recipes/
     depends_on:
       - db
     env_file:

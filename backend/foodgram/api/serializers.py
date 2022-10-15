@@ -209,6 +209,7 @@ class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         ingredients = validated_data.pop('ingredients')
         tags = validated_data.pop('tags')
+        image = validated_data.pop('image')
         author = self.context.get('request').user
         recipe = Recipe.objects.create(author=author, **validated_data)
         self.create_ingredients(ingredients, recipe)
@@ -234,19 +235,6 @@ class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
         return RecipeSerializer(instance, context={
             'request': self.context.get('request')
         }).data
-
-
-class ShowRecipeSerializer(CreateUpdateRecipeSerializer):
-    image = serializers.SerializerMethodField(
-        method_name='get_image'
-    )
-
-    class Meta:
-        model = Recipe
-        fields = ('id', 'name', 'image', 'cooking_time')
-
-    def get_image(self, obj):
-        return f'{obj.image.url}'
 
 
 class UserFavoriteSerializer(serializers.ModelSerializer):
