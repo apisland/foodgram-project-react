@@ -228,7 +228,7 @@ class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
         """Метод проверки время приготовления."""
         if str(cooking_time):
             raise serializers.ValidationError(
-                    'Строковое значение недопустимо!')
+                'Строковое значение недопустимо!')
         if int(cooking_time) < 1:
             raise serializers.ValidationError(
                 'Время приготовления больше 1!')
