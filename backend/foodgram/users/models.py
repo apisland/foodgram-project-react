@@ -20,7 +20,6 @@ class User(AbstractUser):
         max_length=150,
         verbose_name='Имя пользователя',
         unique=True,
-        null=True,
         validators=[RegexValidator(
             regex=r'^[\w.@+-]+$',
             message='Имя пользователя содержит недопустимый символ'
@@ -28,12 +27,10 @@ class User(AbstractUser):
     )
     first_name = models.CharField(
         max_length=150,
-        blank=False,
         verbose_name='Имя'
     )
     last_name = models.CharField(
         max_length=150,
-        blank=False,
         verbose_name='Фамилия'
     )
     role = models.CharField(
@@ -43,15 +40,15 @@ class User(AbstractUser):
         verbose_name='Роль')
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'password']
+    REQUIRED_FIELDS = ('username', 'first_name', 'last_name', 'password')
 
     class Meta:
-        ordering = ['id']
+        ordering = ('id',)
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
         constraints = [
             models.UniqueConstraint(
-                fields=['username', 'email'],
+                fields=('username', 'email'),
                 name='unique_username_email'
             ),
         ]
@@ -75,7 +72,7 @@ class Follow(models.Model):
         verbose_name = 'Подписчик'
         verbose_name_plural = 'Подписчики'
         constraints = [
-            models.UniqueConstraint(fields=['user', 'author'],
+            models.UniqueConstraint(fields=('user', 'author'),
                                     name='follow_1_time_no_self_follow')
         ]
 

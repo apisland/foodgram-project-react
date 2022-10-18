@@ -5,6 +5,7 @@ from users.models import User
 
 
 class RecipeFilter(filter.FilterSet):
+    """Фильтр рецепта."""
     author = filter.ModelChoiceFilter(
         queryset=User.objects.all())
     tags = filter.AllValuesMultipleFilter(
@@ -19,11 +20,13 @@ class RecipeFilter(filter.FilterSet):
         fields = ['tags', 'author', 'is_favorited', 'is_in_shopping_cart']
 
     def get_favorite(self, queryset, name, value):
+        """Фильтрация избранного."""
         if value:
             return queryset.filter(favorites__user=self.request.user)
         return queryset
 
     def get_is_in_shopping_cart(self, queryset, name, value):
+        """Фильтрация списка покупок."""
         if value:
             return queryset.filter(shopping_cart__user=self.request.user)
         return queryset
