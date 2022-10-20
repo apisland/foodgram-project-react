@@ -1,8 +1,10 @@
 from django.core.management import BaseCommand
+
 from recipes.models import Tag
 
 
 class Command(BaseCommand):
+    """загрузка тегов в БД."""
     help = 'Создаем тэги'
 
     def handle(self, *args, **kwargs):

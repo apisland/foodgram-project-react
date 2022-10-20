@@ -10,9 +10,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from recipes.models import (Favorite, Ingredient, IngredientRecipe, Recipe,
-                            ShoppingCart, Tag)
-from users.models import Follow
 from api.filters import IngredientSearchFilter, RecipeFilter
 from api.pagination import CustomPagination
 from api.permissions import IsAdminOrAuthorOrReadOnly
@@ -21,12 +18,16 @@ from api.serializers import (CreateUpdateRecipeSerializer, FavoriteSerializer,
                              RecipeSerializer, ShoppingCartSerializer,
                              TagSerializer, UserFollowSerializer,
                              UserListSerializer)
+from recipes.models import (Favorite, Ingredient, IngredientRecipe, Recipe,
+                            ShoppingCart, Tag)
+from users.models import Follow
+
 
 User = get_user_model()
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
-    """Отображение тегов."""
+    """представление для тегов."""
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = (AllowAny, )
@@ -34,7 +35,7 @@ class TagViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class IngredientViewSet(viewsets.ModelViewSet):
-    """Отображение ингредиентов."""
+    """представление для ингредиентов."""
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     permission_classes = (AllowAny, )
@@ -44,7 +45,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    """Профиль пользователя."""
+    """профиль пользователя."""
     queryset = User.objects.all()
     serializer_class = UserListSerializer
     permission_classes = (AllowAny, )
@@ -61,7 +62,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class FollowView(APIView):
-    """Операции добавления/удаления подписки."""
+    """добавление/удаление подписки на автора."""
     queryset = Follow.objects.all()
     permission_classes = (IsAuthenticated, )
 
@@ -92,7 +93,7 @@ class FollowView(APIView):
 
 
 class UserFollowView(ListAPIView):
-    """Отображение подписок пользователя."""
+    """отображение подписок."""
     permission_classes = (IsAuthenticated, )
     pagination_class = CustomPagination
 
@@ -107,7 +108,7 @@ class UserFollowView(ListAPIView):
 
 
 class FavoriteView(APIView):
-    """Добавление/удаление избранного."""
+    """добваление/удаление избранного."""
     queryset = Favorite.objects.all()
     permission_classes = (IsAuthenticated, )
     pagination_class = CustomPagination
@@ -138,7 +139,7 @@ class FavoriteView(APIView):
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
-    """Создание/редактирование рецептов."""
+    """создание/обновление рецептов."""
     queryset = Recipe.objects.all()
     permission_classes = (IsAdminOrAuthorOrReadOnly, )
     pagination_class = CustomPagination
@@ -157,7 +158,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 
 class ShoppingCartView(APIView):
-    """Добавление/удаление корзины покупок."""
+    """добавление/удаление корзины покупок."""
     permission_classes = (IsAuthenticated, )
 
     def post(self, request, id):
@@ -190,7 +191,7 @@ class ShoppingCartView(APIView):
 
 @api_view(['GET'])
 def download_shopping_cart(request):
-    """Скачивание корзины покупок."""
+    """скачать список покупок."""
     ingredient_list = "Cписок покупок:"
     ingredients = IngredientRecipe.objects.filter(
         recipe__shopping_cart__user=request.user

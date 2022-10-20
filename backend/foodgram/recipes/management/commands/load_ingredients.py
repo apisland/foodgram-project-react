@@ -1,10 +1,12 @@
 import csv
 
 from django.core.management.base import BaseCommand
+
 from recipes.models import Ingredient
 
 
 class Command(BaseCommand):
+    """загрузка ингредиентов в БД."""
 
     def handle(self, *args, **options):
         self.import_ingredients()
