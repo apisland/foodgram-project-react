@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
+from django.forms import ValidationError
 
 
 class User(AbstractUser):
@@ -74,8 +75,12 @@ class Follow(models.Model):
         verbose_name_plural = 'Подписчики'
         constraints = [
             models.UniqueConstraint(fields=('user', 'author'),
-                                    name='follow_1_time_no_self_follow')
+                                    name='follow_1_time_no_self_follow'),
         ]
+
+    def clean(self):
+        if self.user.id == self.author.id:
+            raise ValidationError('Нельзя подписаться на самого себя!')
 
     def __str__(self):
         return f"'Подписчик: '{self.user}', Автор : '{self.author}'"

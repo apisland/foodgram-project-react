@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 User = get_user_model()
@@ -27,6 +27,24 @@ class Ingredient(models.Model):
 
 class Tag(models.Model):
     """Модель тега."""
+
+    BLUE = '#0000FF'
+    ORANGE = '#FFA500'
+    GREEN = '#008000'
+    PURPLE = '#800080'
+    YELLOW = '#FFD700'
+    RED = '#8B0000'
+    GRAY = '#808080'
+
+    COLOR_CHOICES = [
+        (BLUE, 'Синий'),
+        (ORANGE, 'Оранжевый'),
+        (GREEN, 'Зеленый'),
+        (PURPLE, 'Фиолетовый'),
+        (YELLOW, 'Желтый'),
+        (RED, 'Красный'),
+        (GRAY, 'Серый'),
+    ]
     name = models.CharField(
         max_length=100,
         unique=True,
@@ -35,8 +53,8 @@ class Tag(models.Model):
     color = models.CharField(
         max_length=7,
         unique=True,
-        verbose_name='цвет тега',
-    )
+        choices=COLOR_CHOICES,
+        verbose_name='Цвет в HEX')
     slug = models.SlugField(
         max_length=100,
         unique=True,
@@ -120,7 +138,9 @@ class IngredientRecipe(models.Model):
     )
     amount = models.IntegerField(
         verbose_name='Количество',
-        validators=[MinValueValidator(1)]
+        validators=[
+            MaxValueValidator(9999,),
+            MinValueValidator(1)]
     )
 
     class Meta:

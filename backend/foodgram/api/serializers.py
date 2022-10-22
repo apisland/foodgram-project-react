@@ -1,4 +1,3 @@
-from django.shortcuts import get_object_or_404
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
@@ -169,18 +168,17 @@ class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
             'cooking_time',
         )
 
-    def validate_ingred(self, value):
-        """валидация ингредиентов."""
-        ingredients = value
-        ingredient_list = []
-        for items in ingredients:
-            ingredient = get_object_or_404(
-                Ingredient, id=items['id'])
-            if ingredient in ingredient_list:
+    def validate(self, data):
+        ingredients = self.initial_data.get('ingredients')
+        ingredients_list = []
+        for ingredient in ingredients:
+            ingredient_id = ingredient['id']
+            if ingredient_id in ingredients_list:
                 raise serializers.ValidationError(
-                    'Ингредиент должен быть уникальным!')
-            ingredient_list.append(ingredient)
-        return value
+                    'Ингредиент должен быть уникальным!'
+                )
+            ingredients_list.append(ingredient_id)
+        return data
 
     def validate_tags(self, value):
         """валидация тегов."""
@@ -363,6 +361,20 @@ class FollowSerializer(serializers.ModelSerializer):
                 fields=['user', 'author'],
             )
         ]
+
+    def validate(self, data):
+        """валидация подписок."""
+        author = self.instance
+        user = self.context.get('request').user
+        if Follow.objects.filter(author=author, user=user).exists():
+            raise serializers.ValidationError(
+                detail='Вы уже подписаны на этого пользователя!',
+            )
+        if user == author:
+            raise serializers.ValidationError(
+                detail='Вы не можете подписаться на самого себя!',
+            )
+        return data
 
     def to_representation(self, instance):
         return UserFollowSerializer(instance.author, context={
