@@ -151,7 +151,7 @@ class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
     author = UserListSerializer(read_only=True)
     ingredients = IngredientsEditSerializer(many=True)
     tags = serializers.PrimaryKeyRelatedField(
-        queryset=Tag.objects.all(), many=True
+        queryset=Tag.objects.all(), many=True,
     )
     image = Base64ImageField(max_length=None, use_url=True)
 
@@ -217,7 +217,11 @@ class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
         for ingredient in ingredients:
             if int(ingredient.get('amount')) < 1:
                 raise serializers.ValidationError(
-                    'Количество ингредиента должно быть 1!')
+                    'Количество ингредиента должно быть больше 0!')
+            if int(ingredient.get('amount')) > 32767:
+                raise serializers.ValidationError(
+                    'Количество ингредиента не должно быть больше 32767!'
+                )
             if not int(ingredient.get('amount')):
                 raise serializers.ValidationError(
                     'Можно ввести только число!')
