@@ -5,6 +5,17 @@
 # Проект: Foodgram (Продуктовый помощник)
 Дипломный проект Яндекс.Практикум
 
+### Стек технологий
+
+![](https://img.shields.io/badge/Python-3.7-blue?style=flat&logo=Python&logoColor=lightgreen)
+![](https://img.shields.io/badge/Django-2.2.16-blue?style=flat&logo=Django&logoColor=red)
+![](https://img.shields.io/badge/PostgreSQL-black?style=flat&logo=PostgreSQL&logoColor=orange)
+![](https://img.shields.io/badge/Nginx-black?style=flat&logo=NGINX&logoColor=green)
+![](https://img.shields.io/badge/Linux-black?style=flat&logo=Linux&logoColor=#FCC624)
+![](https://img.shields.io/badge/Gunicorn-black?style=flat&logo=Gunicorn&logoColor=#499848)
+![](https://img.shields.io/badge/Docker-black?style=flat&logo=Docker&logoColor=blue)
+
+
 ## Описание
 Foodgram это ресурс для публикации рецептов.
 Пользователи могут создавать свои рецепты, читать рецепты других пользователей, подписываться на интересных авторов,
