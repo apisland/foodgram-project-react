@@ -117,7 +117,7 @@ ALLOWED_HOSTS=<...>
 - учетные данные для проверки:
 ```
 e-mail: admin@admin.ru
-password: cfqqwwql
+password: ********
 ```
 ## Проект выполнен:
 [Valentin Klimov](https://github.com/apisland)
