@@ -7,7 +7,7 @@
 
 ### Стек технологий
 
-![](https://img.shields.io/badge/Python-3.7-blue?style=flat&logo=Python&logoColor=lightgreen)
+![](https://img.shields.io/badge/Python-3.7-blue?style=flat&logo=Python&logoColor=#3776AB)
 ![](https://img.shields.io/badge/Django-2.2.16-blue?style=flat&logo=Django&logoColor=red)
 ![](https://img.shields.io/badge/PostgreSQL-black?style=flat&logo=PostgreSQL&logoColor=orange)
 ![](https://img.shields.io/badge/Nginx-black?style=flat&logo=NGINX&logoColor=green)
